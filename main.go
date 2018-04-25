@@ -108,7 +108,7 @@ func main() {
 		err error
 	)
 
-	// autodetect package name if neccesary
+	// autodetect package name if necessary
 	if pkg == "" {
 		if pkg, err = getPackageName(dir); err != nil {
 			log.Fatal("can't detec golang package name")

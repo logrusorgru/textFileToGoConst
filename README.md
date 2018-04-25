@@ -42,7 +42,7 @@ used to generate Go files
 - getNotTouch.lua.go
 - getIncrNotTouch.lua.go
 
-wiht something like this
+with something like this
 ```
 package some
 
