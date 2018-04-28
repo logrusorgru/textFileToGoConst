@@ -23,9 +23,23 @@
 //  0. You just DO WHAT THE FUCK YOU WANT TO.
 //
 
-// Package textFileToGoConst implements Go generator
-// that created go file with string constant that contains
-// some text file
+// Package textFileToGoConst implements go:generate tool to put
+// a text file to string constant of your Go project.
+//
+// Commandline flags and arguments
+//
+//     -in - source file name (required)
+//     -o  - output file name (defaults to source + .go)
+//     -p  - package name (defaults to autodetect)
+//     -c  - constant name (defaults to CamelCased file name without dots)
+//     -h  - show help
+//
+// Example go:generate comments
+//
+//     //go:generate textFileToGoConst -in=lua/get.lua
+//     //go:generate textFileToGoConst -in=lua/set.lua -o=setLua.go -c=setLua
+//     //go:generate textFileToGoConst -in=init.lua github.com/example/goProject
+//
 package main
 
 import (

@@ -5,8 +5,7 @@ textFileToGoConst
 [![WTFPL License](https://img.shields.io/badge/license-wtfpl-blue.svg)](http://www.wtfpl.net/about/)
 [![GoReportCard](https://goreportcard.com/badge/logrusorgru/textFileToGoConst)](https://goreportcard.com/report/logrusorgru/textFileToGoConst)
 
-Go generate tool that create Go file with constant
-containing provided text file.
+Go generate tool to put a text file to string constant of your Go project.
 
 
 # Installation
@@ -15,19 +14,23 @@ Get
 ```
 go get -u github.com/logrusorgru/textFileToGoConst
 ```
+The `go get` command installs `textFileToGoConst` executable in your
+`$GOPATH/bin` or `$GOBIN/` directory.
+
 
 The project comes without any tests.
 
 # Usage
 
-For example, if you want to use Redis with your Go application and use
-Lua scripts. Since, it is easy to use separate `*.lua` files to use
-syntax highlighting and other editing features. But is't not easy to
-laod this files at runtime, or if you want content of the files to
-be a constant of you Go project. Thus, the textFileToGoConst loads
-text files and creates Go file with constant that contains the text file.
+For example, if you want to use Redis with your Go application and want to
+use Lua scripts. Since, it is easy to use separate `*.lua` files to use
+syntax highlighting and other editing features. But it's not easy to laod
+this files at runtime, or if you want content of the files to be a constant
+of you Go project. And since, manual copy-pasting is hasd and slow. Thus,
+the `textFileToGoConst` puts content of text file to you Go project, creating
+`*.go` file with.
 
-For out example, the following file
+For example, the following file
 ```go
 package some
 
@@ -50,7 +53,16 @@ const getLua = `<content of the get.lua file>`
 
 ```
 
-See also command line help `textFileToGoConst -h`
+## Flags and arguments
+
+- `in` - source file name (required)
+- `o`  - output file name (defaults to source + .go)
+- `p`  - package name (defaults to autodetect)
+- `c`  - constant name (defaults to CamelCased file name without dots)
+- `h`  - show help
+
+And trailing argument, that describes destination folder, folder with Go
+project (defaults to `.`)
 
 # Contributing
 
