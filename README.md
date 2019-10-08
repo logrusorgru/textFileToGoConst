@@ -24,9 +24,9 @@ The project comes without any tests.
 
 For example, if you want to use Redis with your Go application and want to
 use Lua scripts. Since, it is easy to use separate `*.lua` files to use
-syntax highlighting and other editing features. But it's not easy to laod
+syntax highlighting and other editing features. But it's not easy to load
 this files at runtime, or if you want content of the files to be a constant
-of you Go project. And since, manual copy-pasting is hasd and slow. Thus,
+of you Go project. And since, manual copy-pasting is hard and slow. Thus,
 the `textFileToGoConst` puts content of text file to you Go project, creating
 `*.go` file with.
 
