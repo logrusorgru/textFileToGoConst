@@ -28,11 +28,12 @@
 //
 // Commandline flags and arguments
 //
-//     -in - source file name (required)
-//     -o  - output file name (defaults to source + .go)
-//     -p  - package name (defaults to autodetect)
-//     -c  - constant name (defaults to CamelCased file name without dots)
-//     -h  - show help
+//     -in     - source file name (required)
+//     -o      - output file name (defaults to source + .go)
+//     -p      - package name (defaults to autodetect)
+//     -c      - constant name (defaults to CamelCased file name without dots)
+//     -no-gat - no 'generated at' time
+//     -h      - show help
 //
 // Example go:generate comments
 //
@@ -64,11 +65,12 @@ func init() {
 
 func main() {
 	var (
-		in   string
-		out  string
-		cnst string
-		help bool
-		pkg  string // package name
+		in    string
+		out   string
+		cnst  string
+		nogat bool
+		help  bool
+		pkg   string // package name
 	)
 
 	flag.StringVar(&in,
@@ -87,6 +89,10 @@ func main() {
 		"c",
 		cnst,
 		"constant name (defaults to CamelCased file name without dots)")
+	flag.BoolVar(&nogat,
+		"no-gat",
+		false,
+		"don't put 'generated at' line")
 	flag.BoolVar(&help,
 		"h",
 		false,
@@ -125,7 +131,7 @@ func main() {
 	// autodetect package name if necessary
 	if pkg == "" {
 		if pkg, err = getPackageName(dir); err != nil {
-			log.Fatal("can't detec golang package name")
+			log.Fatal("can't detect golang package name")
 		}
 	}
 
@@ -147,12 +153,14 @@ func main() {
 	writeLine(outFile,
 		"// GitHub:     github.com/logrusorgru/textFileToGoConst")
 	writeLine(outFile, "// input file: "+in)
-	writeLine(outFile, "// generated:  "+time.Now().Format(time.UnixDate))
+	if !nogat {
+		writeLine(outFile, "// generated:  "+time.Now().Format(time.UnixDate))
+	}
 	writeLine(outFile, "")
 	writeLine(outFile, "package "+pkg)
 	writeLine(outFile, "")
 
-	// cosntant name by input file name
+	// constant name by input file name
 	if cnst == "" {
 		cnst = constNameByFileName(in) // get.lua => getLua
 	}
@@ -206,11 +214,11 @@ func constNameByFileName(fileName string) string {
 
 func upperCaseFirst(val string) string {
 	if len(val) == 0 {
-		return val // not chagned
+		return val // not changed
 	}
 	var r, w = utf8.DecodeRuneInString(val)
 	if w == 0 {
-		return val // not chagned
+		return val // not changed
 	}
 	return string(unicode.ToUpper(r)) + val[w:]
 }
@@ -238,4 +246,4 @@ func isDirectory(name string) bool {
 	return info.IsDir()
 }
 
-//go:generate textFileToGoConst -in=get.lua
+// go:generate textFileToGoConst -in=get.lua -no-gat
