@@ -8,6 +8,10 @@ textFileToGoConst
 Go generate tool to put a text file to string constant of your Go project.
 
 
+# Go 1.6+
+
+Please refer to [go:embed](https://tip.golang.org/pkg/embed/) first. This package is not needed anymore.
+
 # Installation
 
 Get
